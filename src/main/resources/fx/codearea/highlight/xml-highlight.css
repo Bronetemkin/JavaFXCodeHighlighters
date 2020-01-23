@@ -1,0 +1,51 @@
+.text {
+    -fx-fill: #A9B7C6;
+}
+
+.xml-attribute {
+    -fx-fill: #9876AA;
+}
+
+.element {
+    -fx-fill: #CB772F;
+}
+
+.digit {
+    -fx-fill: #6897BB;
+}
+
+.comment {
+    -fx-fill: #808080;
+}
+
+.paragraph-box {
+    -fx-background-color: #2B2B2B;
+}
+
+.caret {
+    -fx-stroke: white;
+}
+
+.lineno {
+    -fx-background-color: #323232;
+}
+
+.background-fail-highlight {
+    -fx-background-color: red;
+}
+
+.string {
+    -fx-fill: #619647;
+}
+
+.dparam {
+    -fx-fill: yellow;
+}
+
+.error {
+    -fx-fill: red;
+}
+
+.method {
+    -fx-fill: #FFC66D;
+}
