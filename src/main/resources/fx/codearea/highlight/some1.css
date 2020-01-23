@@ -1,0 +1,54 @@
+/* default text styling
+#codeArea .text {
+    -fx-fill: black;
+}
+#codeArea .keyword {
+    -fx-fill: blue;
+}
+#codeArea .operator {
+    -fx-fill: purple;
+}
+ */
+.text {
+    -fx-fill: #A9B7C6;
+    -fx-font-size: 12;
+    /*-fx-font-family: Menlo;*/
+}
+.lineno {
+    -fx-background-color: #323232;
+}
+.keyword {
+    -fx-fill: #CB772F;
+    /*-fx-font-weight: bold;*/
+}
+.semicolon {
+    -fx-font-weight: bold;
+}
+.bracket {
+    -fx-fill: darkgreen;
+    -fx-font-weight: bold;
+}
+.string {
+    -fx-fill: #619647;
+}
+
+.comment {
+    -fx-fill: #808080;
+}
+
+.paragraph-box {
+    -fx-background-color: #2B2B2B;
+}
+
+.paragraph-box:has-caret {
+    -fx-background-color: #404040;
+    /*-fx-background-color: black;*/
+}
+
+.annotation {
+    -fx-fill: yellow;
+}
+
+.marked {
+    -fx-fill: red;
+}
