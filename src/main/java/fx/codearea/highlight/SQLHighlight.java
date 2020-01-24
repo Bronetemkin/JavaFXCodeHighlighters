@@ -8,7 +8,7 @@ public class SQLHighlight extends HighlightProcessor {
     public static final String STRING_PATTERN = "\".*?\"|'.*?'";
     public static final String COMMENT_PATTERN = "--.*\n";
     public static final String DYNAMIC_PARAMS_PATTERN = "\\{\\d+}";
-    private static final String[] KEYWORDS = new String[]{
+    public static final String[] KEYWORDS = new String[]{
             "add", "constraint", "alter", "alter", "column", "all", "and", "any", "as",
             "asc", "backup", "between", "case", "check", "column", "constraint", "create",
             "create", "create index", "create", "or", "replace", "view", "table", "create", "procedure",
@@ -17,7 +17,7 @@ public class SQLHighlight extends HighlightProcessor {
             "exec", "exists", "foreign", "key", "from", "full", "outer", "group", "by", "having", "in", "index", "inner",
             "insert", "is", "null", "is", "null", "join", "left", "like", "limit", "not",
             "or", "order", "outer", "primary", "right", "rownum", "select",
-            "set", "table", "top", "truncate", "union",
+            "set", "table", "top", "truncate", "union", "execute", "immediate",
             "union all", "unique", "update", "values", "view", "where", "begin", "declare", "end", "into", "to", "rename",
             "exception", "when", "others", "then", "sqlcode", "sqlerrm"
     };
@@ -25,8 +25,8 @@ public class SQLHighlight extends HighlightProcessor {
             "\\,", "\\;"
     };
     public static final String METHOD = "(\\h*|\\h*\\.)(?<METHOD>\\w+)\\(";
-    private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
-    private static final Pattern MAIN_PATTERN = Pattern.compile(
+    public static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
+    public static final Pattern MAIN_PATTERN = Pattern.compile(
             "(?<ELEMENT>" + KEYWORD_PATTERN + ")"
                     + "|(?<DIGITS>" + DIGITS_PATTERN + ")"
                     + "|(?<STRING>" + STRING_PATTERN + ")"
@@ -34,7 +34,7 @@ public class SQLHighlight extends HighlightProcessor {
                     + "|" + METHOD
                     + "|(?<SIGNS>(" + String.join("|", SIGNS) + "))"
     );
-    private static final Pattern DPARAMS_PATTERN = Pattern.compile("(?<DPARAM>" + DYNAMIC_PARAMS_PATTERN + ")");
+    public static final Pattern DPARAMS_PATTERN = Pattern.compile("(?<DPARAM>" + DYNAMIC_PARAMS_PATTERN + ")");
 
     @Override
     public void init() {

@@ -7,7 +7,7 @@ public class XMLHighlight extends HighlightProcessor {
     public static final String ELEMENT = "(</?\\h*)(\\w+)([^<>]*)(\\h*/?>)";
     public static final String COMMENT = "<!--[^<>]+-->";
     public static final String STRING = "('.*'|\".*\")";
-    private static final String ATTRIBUTES = "(\\w+\\h*)(=)(\\h*[\"][^\"]*[\"]|\\h*['][^\"]*['])";
+    public static final String ATTRIBUTES = "(\\w+\\h*)(=)(\\h*[\"][^\"]*[\"]|\\h*['][^\"]*['])";
 
     public static final Pattern PATTERN = Pattern.compile("(?<ELEMENT>" + ELEMENT + ")"
             + "|(?<COMMENT>" + COMMENT + ")"

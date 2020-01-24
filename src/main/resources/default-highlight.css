@@ -49,3 +49,16 @@
 .method {
     -fx-fill: #FFC66D;
 }
+
+.keyword {
+    -fx-fill: #CB772F;
+    /*-fx-font-weight: bold;*/
+}
+
+.semicolon {
+    -fx-font-weight: bold;
+}
+
+.annotation {
+    -fx-fill: yellow;
+}

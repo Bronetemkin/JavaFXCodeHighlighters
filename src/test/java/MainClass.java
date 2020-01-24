@@ -1,5 +1,4 @@
-package fx.codearea.highlight;
-
+import fx.codearea.highlight.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -27,7 +26,7 @@ public class MainClass extends Application {
     @Override
     public void start(Stage stage) {
 //        CodeArea codeArea = makeXMLArea(readXMLFile());
-        //       CodeArea codeArea = makeJavaCodeArea(readJavaFile());
+//        CodeArea codeArea = makeJavaCodeArea(readJavaFile());
         CodeArea codeArea = makeSQLArea(readSQLFile());
 
 //        codeArea.setEditable(false);
@@ -76,7 +75,6 @@ public class MainClass extends Application {
         CodeArea codeArea = initCodeArea(highlight);
 
         codeArea.replaceText(0, 0, srcCode);
-        codeArea.getStylesheets().add(getClass().getResource("some1.css").toExternalForm());
 
         return codeArea;
     }
@@ -85,7 +83,6 @@ public class MainClass extends Application {
         CodeArea codeArea = initCodeArea(new XMLHighlight());
 
         codeArea.replaceText(0, 0, srcText);
-        codeArea.getStylesheets().add(getClass().getResource("xml-highlight.css").toExternalForm());
 
         return codeArea;
     }
@@ -94,14 +91,12 @@ public class MainClass extends Application {
         CodeArea codeArea = initCodeArea(new SQLHighlight());
 
         codeArea.replaceText(0, 0, srcText);
-        codeArea.getStylesheets().add(getClass().getResource("xml-highlight.css").toExternalForm());
 
         return codeArea;
     }
 
     private CodeArea initCodeArea(CodeHighlightProcessor codeHighlightProcessor) {
         CodeArea codeArea = new CodeArea();
-        codeArea.setId("codeArea");
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         codeArea
                 .multiPlainChanges()
@@ -118,6 +113,7 @@ public class MainClass extends Application {
             }
         });
         codeArea.setPrefSize(800, 600);
+        codeArea.getStylesheets().addAll(getClass().getResource("/default-highlight.css").toExternalForm());
         return codeArea;
     }
 
