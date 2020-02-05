@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
 
 public interface CodeHighlightProcessor {
 
+    StyleSpans<Collection<String>> processHighlight(String text, Collection<StyleSpans<Collection<String>>> styleSpansBuilders);
+
     StyleSpans<Collection<String>> processHighlight(String patternName, String text);
 
     StyleSpans<Collection<String>> processHighlight(String text);

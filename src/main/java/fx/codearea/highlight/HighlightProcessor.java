@@ -18,6 +18,15 @@ public abstract class HighlightProcessor implements CodeHighlightProcessor, Init
     }
 
     @Override
+    public StyleSpans<Collection<String>> processHighlight(String text, Collection<StyleSpans<Collection<String>>> styleSpans) {
+        StyleSpans<Collection<String>> result = processHighlight(text);
+        for(StyleSpans<Collection<String>> spans : styleSpans) {
+            result = mergeHighlights(result, spans);
+        }
+        return result;
+    }
+
+    @Override
     public StyleSpans<Collection<String>> processHighlight(String text) {
         String ignoreCaseText = text.toLowerCase();
         StyleSpans<Collection<String>> result = null;
