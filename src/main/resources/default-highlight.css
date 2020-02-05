@@ -38,6 +38,10 @@
     -fx-fill: #619647;
 }
 
+.attribute {
+    -fx-fill: #9876AA;
+}
+
 .dparam {
     -fx-fill: yellow;
 }

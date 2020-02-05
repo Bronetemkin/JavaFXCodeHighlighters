@@ -10,8 +10,10 @@ import java.util.regex.Pattern;
 
 public abstract class HighlightProcessor implements CodeHighlightProcessor, Initable {
 
-    private Map<String, Pattern> patternMap = new HashMap<>();
-    private Map<String, List<Pair<String, String>>> cssStylesMap = new HashMap<>();
+    public static final String PATTERN_DOUBLE_QUOTED_STRING = "\"[^\"]*\"";
+    public static final String PATTERN_QUOTED_STRING = "'[^']*'";
+
+    private Map<String, HighlightPattern> patternMap = new HashMap<>();
 
     public HighlightProcessor() {
         init();
@@ -30,7 +32,7 @@ public abstract class HighlightProcessor implements CodeHighlightProcessor, Init
     public StyleSpans<Collection<String>> processHighlight(String text) {
         String ignoreCaseText = text.toLowerCase();
         StyleSpans<Collection<String>> result = null;
-        for (Map.Entry<String, Pattern> pattern : patternMap.entrySet()) {
+        for (Map.Entry<String, HighlightPattern> pattern : patternMap.entrySet()) {
             StyleSpans<Collection<String>> cur = processHighlight(pattern.getKey(), ignoreCaseText);
             if (result == null) result = cur;
             else result = mergeHighlights(result, cur);
@@ -46,13 +48,13 @@ public abstract class HighlightProcessor implements CodeHighlightProcessor, Init
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
 
         while (matcher.find()) {
-            Pair<Integer, String> pair = onGetStyleCSS(cssStylesMap.get(pattern), 0, matcher);
+            Pair<Integer, String> pair = onGetStyleCSS(patternMap.get(pattern).getParams(), 0, matcher);
             String styleGroup = pair.getValue();
-            onStyleGroup(styleGroup, matcher);
             String styleClass = getStyleFor(pattern).get(pair.getKey()).getValue();
 
             spansBuilder.add(Collections.emptyList(), matcher.start(styleGroup) - lastKwEnd);
-            spansBuilder.add(Collections.singleton(styleClass), matcher.end(styleGroup) - matcher.start(styleGroup));
+
+            onAddSpansToText(spansBuilder, styleGroup, styleClass, matcher);
 
             lastKwEnd = matcher.end(styleGroup);
         }
@@ -61,11 +63,18 @@ public abstract class HighlightProcessor implements CodeHighlightProcessor, Init
         return spansBuilder.create();
     }
 
+    public void onAddSpansToText(StyleSpansBuilder<Collection<String>> spansBuilder, String styleGroupRegex, String styleClassCss, Matcher matcher) {
+        spansBuilder.add(Collections.singleton(styleClassCss), matcher.end(styleGroupRegex) - matcher.start(styleGroupRegex));
+    }
+
+    public HighlightProcessor addHighlightPattern(HighlightPattern pattern) {
+        patternMap.put(pattern.getPatternName(), pattern);
+        return this;
+    }
+
     @Override
     public CodeHighlightProcessor addCssStyleClass(String patternName, String regexpGroupName, String cssStyleName) {
-        List<Pair<String, String>> styleList = cssStylesMap.containsKey(patternName) ? cssStylesMap.get(patternName) : new ArrayList<>();
-        styleList.add(new Pair<>(regexpGroupName, cssStyleName));
-        cssStylesMap.put(patternName, styleList);
+        patternMap.get(patternName).putParam(regexpGroupName, cssStyleName);
         return this;
     }
 
@@ -77,18 +86,18 @@ public abstract class HighlightProcessor implements CodeHighlightProcessor, Init
 
     @Override
     public List<Pair<String, String>> getStyleFor(String patternName) {
-        return cssStylesMap.get(patternName);
+        return patternMap.get(patternName).getParams();
     }
 
     @Override
     public CodeHighlightProcessor addPattern(String patternName, Pattern pattern) {
-        patternMap.put(patternName, pattern);
+        patternMap.put(patternName, HighlightPattern.name(patternName, pattern));
         return this;
     }
 
     @Override
     public Pattern getPatternFor(String patternName) {
-        return patternMap.get(patternName);
+        return patternMap.get(patternName).getPattern();
     }
 
     @Override
@@ -110,7 +119,5 @@ public abstract class HighlightProcessor implements CodeHighlightProcessor, Init
         if (cssStyleIndex > cssStyles.size()) return null;
         return matcher.group(cssStyles.get(cssStyleIndex).getKey()) != null ? new Pair<>(cssStyleIndex, cssStyles.get(cssStyleIndex).getKey()) : onGetStyleCSS(cssStyles, cssStyleIndex + 1, matcher);
     }
-
-    protected void onStyleGroup(String styleGroup, Matcher matcher) {}
 
 }

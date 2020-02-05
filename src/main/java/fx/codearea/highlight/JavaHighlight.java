@@ -35,18 +35,17 @@ public class JavaHighlight extends HighlightProcessor {
                     + "|(?<ANNOTATION>" + ANNOTATION_PATTERN + ")"
     );
 
-
     @Override
     public void init() {
-        addPattern("main", PATTERN);
-
-        addCssStyleClass("main", "KEYWORD", "keyword");
-        addCssStyleClass("main", "PAREN", "paren");
-        addCssStyleClass("main", "BRACE", "brace");
-        addCssStyleClass("main", "BRACKET", "bracket");
-        addCssStyleClass("main", "SEMICOLON", "semicolon");
-        addCssStyleClass("main", "STRING", "string");
-        addCssStyleClass("main", "COMMENT", "comment");
-        addCssStyleClass("main", "ANNOTATION", "annotation");
+        addHighlightPattern(HighlightPattern.name("main", PATTERN)
+                .putParam("KEYWORD", "keyword")
+                .putParam("PAREN", "paren")
+                .putParam("BRACE", "brace")
+                .putParam("BRACKET", "bracket")
+                .putParam("SEMICOLON", "semicolon")
+                .putParam("STRING", "string")
+                .putParam("COMMENT", "comment")
+                .putParam("ANNOTATION", "annotation")
+        );
     }
 }

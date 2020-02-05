@@ -38,20 +38,17 @@ public class SQLHighlight extends HighlightProcessor {
 
     @Override
     public void init() {
-        addPattern("main", MAIN_PATTERN);
-        addPattern("additional", DPARAMS_PATTERN);
-        addPattern("error", Pattern.compile("(?<ERROR>to_char)"));
-
-        addCssStyleClass("main", "ELEMENT", "element");
-        addCssStyleClass("main", "SIGNS", "element");
-        addCssStyleClass("main", "DIGITS", "digit");
-        addCssStyleClass("main", "STRING", "string");
-        addCssStyleClass("main", "COMMENT", "comment");
-        addCssStyleClass("main", "METHOD", "method");
-
-        addCssStyleClass("additional", "DPARAM", "dparam");
-
-        addCssStyleClass("error", "ERROR", "error");
+        addHighlightPattern(HighlightPattern.name("main", MAIN_PATTERN)
+                .putParam("ELEMENT", "element")
+                .putParam("SIGNS", "element")
+                .putParam("DIGITS", "digit")
+                .putParam("STRING", "string")
+                .putParam("COMMENT", "comment")
+                .putParam("METHOD", "method"));
+        addHighlightPattern(HighlightPattern.name("additional", DPARAMS_PATTERN)
+                .putParam("DPARAM", "dparam"));
+        addHighlightPattern(HighlightPattern.name("error", Pattern.compile("(?<ERROR>to_char)"))
+                .putParam("ERROR", "error"));
     }
 
 }
